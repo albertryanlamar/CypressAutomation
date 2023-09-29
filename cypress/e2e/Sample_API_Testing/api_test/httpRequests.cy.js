@@ -14,13 +14,13 @@ var stat = response.status
 })
 
 }) */
-
+const { create_user, read_user } = require('../api_endpoints/routes.js');
 describe("HTTP GET Request", () => {
 
     it("GET Call", () => {
       cy.request({
         method:'GET', 
-        url:'https://reqres.in/api/users?page=2'
+        url: read_user
       })
       .then((response) => {
             // Extract the status code from the response
