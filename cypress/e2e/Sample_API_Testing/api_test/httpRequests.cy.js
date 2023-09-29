@@ -14,13 +14,15 @@ var stat = response.status
 })
 
 }) */
-const { create_user, read_user } = require('../api_endpoints/routes.js');
+import rout from '../api_endpoints/routes.js';
+import userPayload from '../api_payload/user.js';
+
 describe("HTTP GET Request", () => {
 
     it("GET Call", () => {
       cy.request({
-        method:'GET', 
-        url: read_user
+        method:'GET',
+        url: rout.read_user
       })
       .then((response) => {
             // Extract the status code from the response
@@ -29,19 +31,18 @@ describe("HTTP GET Request", () => {
             cy.log(`Status Code: ${statusCode}`);
             cy.wrap(statusCode).should('equal', 200); // Example assertion
         }
-      );    
+      );
     });
 
     it("Post Call", ()=>{
-        var requestbody = 
-        {
-            "name":"Testing Bob",
-            "job": "Hero"
-        }
+      var upayload = new userPayload()
+      upayload.setname = 'albert';
+      upayload.setjob = 'tester';
+
         cy.request({
             method:'POST',
-            url:'https://reqres.in/api/users',
-            body: requestbody
+            url:rout.create_user,
+            body: upayload
         })
 
        .then((response) => {
@@ -52,6 +53,7 @@ describe("HTTP GET Request", () => {
                   cy.log(`Status Code: ${statusCode}`);
                   cy.log(JSON.stringify(resbody));
                   cy.wrap(statusCode).should('equal', 201); // Example assertion
+                  cy.log(`Name: ${userPayload.asas}`);
               }
         );
     });
