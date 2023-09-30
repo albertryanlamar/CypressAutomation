@@ -1,5 +1,4 @@
 class userPayload {
-    static asas='abcbc';
 
     constructor() {
       this.name ='';
