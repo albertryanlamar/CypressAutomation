@@ -1,0 +1,7 @@
+{
+    "suite1": [
+      "cypress/e2e/Sample_API_Testing/api_test/httpRequests.cy.js",
+      "cypress/e2e/Sample_API_Testing/api_test/creatbody_request.cy.js"
+      
+    ]
+}

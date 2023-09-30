@@ -1,23 +1,8 @@
-/* describe("Htpp Get Request", ()=>{
 
-it("GET Call", ()=>{
-
-cy.request('GET', 'https://reqres.in/api/users?page=2')
-.then(response)
-var stat = response.status
-//.its('status')
-//.should('equal', 200);
-      // Now you can use 'statusCode' for further assertions or actions
-      cy.log(`Status Code: ${statusCode}`);
-      cy.wrap(statusCode).should('equal', 200); // Example assertion
-
-})
-
-}) */
 import rout from '../api_endpoints/routes.js';
 import userPayload from '../api_payload/user.js';
 
-describe("HTTP GET Request", () => {
+describe("HTTP Request", () => {
 
     it("GET Call", () => {
       cy.request({
@@ -35,6 +20,7 @@ describe("HTTP GET Request", () => {
     });
 
     it("Post Call", ()=>{
+
       var upayload = new userPayload()
       upayload.setname = 'albert';
       upayload.setjob = 'tester';
@@ -57,5 +43,26 @@ describe("HTTP GET Request", () => {
               }
         );
     });
+
+    it("Update", ()=>{
+    var update_rqbody ={
+        "name": "bert",
+        "job": "seniro"
+    }
+        cy.request({
+          method:'PUT',
+          url: rout.update_user,
+          body: update_rqbody
+        })
+        .then((response)=>{
+          const formattedHeaders = Object.entries(response.headers)
+          .map(([name, value]) => `${name}: ${value}`)
+          .join('\n');
+          expect(response.status).to.equal(200);
+          
+          cy.log("Headers",formattedHeaders);
+          cy.log("Response body:",JSON.stringify(response.body, null, 2));
+        })
+    })
 
   });

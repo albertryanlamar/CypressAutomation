@@ -23,3 +23,19 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+// cypress/support/commands.js
+
+Cypress.Commands.add('runSuite', (suiteName) => {
+    cy.readFile('cypress/config/suites.json').then((suites) => {
+      const filesToRun = suites[suiteName] || [];
+      filesToRun.forEach((file) => {
+        cy.log(`Running test file: ${file}`);
+        cy.visit(file);
+      });
+    });
+  });
+  
+  
+  
+  
+  
