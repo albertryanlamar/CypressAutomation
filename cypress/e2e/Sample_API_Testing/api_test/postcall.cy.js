@@ -62,13 +62,12 @@ describe("Creat body Request", () =>
 
       it.only("Approach 3 - using fixture", ()=>
      {
-        var rbody;
         cy.fixture('tourist')
         .then
         ( 
             (data)=>
             {
-                rbody=data;
+                const rbody=data;
                 cy.request
                     (
                         {
@@ -82,6 +81,7 @@ describe("Creat body Request", () =>
                         (response)=>
                         {
                             expect(response.status).to.equal(201);
+                            expect(response.body).have.property('tourist_name',rbody.tourist_name);
                             cy.log("Response body:",response.status);
                             cy.log("Response body:",JSON.stringify(response.body, null, 2));
                         }
