@@ -37,8 +37,10 @@ describe("API Testing Headers and Cookies",()=>
         }).then((response)=>
         {
             expect(response.status).to.eq(201);
-            expect(response.body.created).to.eq(true).log("Response Body",bd(response))
-            cy.log("Response Body",bd(response));
+            expect(response.body.created).to.eq(true);
+            cy.log("Response Status: " + response.status);
+            cy.log("Response Body: " + bd(response));
+
         });
     });
 
