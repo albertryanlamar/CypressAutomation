@@ -1,6 +1,7 @@
 describe("API Testing Headers and Cookies",()=>
 {
     let auttoken='';
+    let orID='';
     before("Creating Access",()=>
     {
         cy.request
@@ -41,14 +42,62 @@ describe("API Testing Headers and Cookies",()=>
             cy.log("Response Status: " + response.status);
             cy.log("Response Body: " + bd(response));
 
+            orID = response.body.orderId;
+
         });
     });
 
-})
+    it("Fetch an order",()=>
+    {
+        cy.request({
+            method:'GET',
+            url:'https://simple-books-api.glitch.me/orders/'+orID,
+            headers:{
+                'Authorization': auttoken
+            }
+        })
+        .then((response)=>
+        {
+            cy.log(`OrderID:  ${orID}`);
+            cy.log("OrderID: "  + orID);
+            expect(response.status).to.eq(200);
+            expect(response.body).to.have.all.keys( "id","bookId","createdBy","quantity","timestamp");
+            expect(response.body.id).to.eq(orID);
+            cy.log("Body Response: " + bd(response));
+        
+        });
+
+    });
+
+    it("Fetching all orders",()=>{
+        cy.request
+        ({
+            method:'GET',
+            url:'https://simple-books-api.glitch.me/orders/',
+            headers:{
+                'Authorization':auttoken
+            },
+            cookies:{
+                'cookieName': 'mycookie'
+            }
+         })
+         .then((response) =>
+         {
+           const orderExists = response.body.some(order => order.id === orID); 
+            expect(response.status).to.eq(200); 
+            expect(orderExists).to.be.true;
+            cy.log("Coookies:" + response.cookieName);
+            cy.log("Response Body: " + bd(response));
+
+         });
+
+    });
+
+});
 
 const bd =(response)=>
 {
-    let res =JSON.stringify(response.body,null,2,{ verbose: true })
+    let res =JSON.stringify(response.body,null,2)
     return res
 }
 
