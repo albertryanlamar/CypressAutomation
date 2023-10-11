@@ -1,4 +1,4 @@
-const tkn = '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';
+const tkn = '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';
 
 describe("Authentication",()=>{
 
@@ -25,6 +25,12 @@ describe("Authentication",()=>{
         vld_bscToken(response);
         })
     });
+    it("APIkeyAuth",()=>
+    {
+        reqApikeyauth().then((response)=>{
+            vldApikeyauth(response);
+        });
+    })
 
 })
 /* For Basic Authentication Request and Validate */
@@ -77,6 +83,22 @@ let bscToken = (tkn)=>
 
 let vld_bscToken = (response)=>{
     expect(response.status).to.equal(200);
-    expect(response.body[0].owner.login).to.equal("albertryanlamar"); 
+    expect(response.body[0].owner.login).to.equal("albertryanlamar");
+
+}
+
+/* APIKey Auth */
+let reqApikeyauth = ()=>{
+    return cy.request({
+        method:'GET',
+        url:'api.openweathermap.org/data/2.5/forecast/daily',
+        qs:{
+            q:'Delhi',
+            appid:'fe9c5cddb7e01d747b4611c3fc9eaf2c'       
+            }
+    })
+}
+let vldApikeyauth = (response)=>{
+    expect(response.status).to.equal(200);
 
 }
