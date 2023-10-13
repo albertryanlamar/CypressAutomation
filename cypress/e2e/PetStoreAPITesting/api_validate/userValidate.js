@@ -1,9 +1,14 @@
+let messageto;
+let response;
+let aa;
 export default class validate
 {
-
-static validate_create = (response)=>{
+    
+    validate_create = (response,aa)=>
+    {
     expect(response.status).to.equal(200);
     expect(response.body.type).to.equal('unknown');
-}
+    expect(response.body.message).to.equal(aa);
+    }
 
 }
