@@ -14,4 +14,11 @@ export default class userEndpoints
         });
     }
 
+  static readUser = (username)=>{
+    return cy.request({
+        method:'GET',
+        url: rout.get_url+username
+    })
+  }
+
 }

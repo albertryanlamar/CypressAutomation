@@ -13,12 +13,12 @@ export default class userPayload {
   
     // Getter for id
     static get getid() {
-      return this.id;
+      return id;
     }
   
     // Getter for username
     static get getusername() {
-      return this.username;
+      return username;
     }
     // Getter for first name
     static get getfirstName(){
